@@ -1,4 +1,6 @@
 
+# Añadir intervalos de confianza
+
  ###########################
  # Segunda entrega EYP1510 #
  ###########################
@@ -7,6 +9,7 @@
 # Paquetes ----------------------------------------------------------------
 library(tidyverse)
 library(vtable)
+library(tableone)
 
 # Importación -------------------------------------------------------------
 data = rio::import("Base Salud 2017.xlsx")
@@ -123,10 +126,25 @@ data$Hipertensión = ifelse(data$presión_PAD > 80 |
                              data$presión_PAS > 140,1,0)
 
 # Análisis Sociodemográfico -----------------------------------------------
+library(psych)
+describe(data)
+
+descriptivo = function(x){
+  cbind("mean (SD)" = paste0(round(mean(x),2)," (", round(sd(x),2),")"),
+        "N (%)" = paste0(length(x)," (", round(length(x)*100/nrow(data),2),"%)"))
+}
+
+psych::describe()
 
 data %>% 
-  select(Region, Sexo, Percepción) %>% 
-  lapply(count)
+  select(Edad, presión_PAD) %>% 
+  lapply(na.omit) %>% 
+  lapply()
+
+
+data %>% 
+  select(Edad, presión_PAD) %>% 
+  stargazer::stargazer(omit.stats = c("min"), type = "text")
 
 # Presión Arterial --------------------------------------------------------
 
