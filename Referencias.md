@@ -1,14 +1,24 @@
 # Referencias
 
+
+### Diabetes
+
 Petrie, J. R., Guzik, T. J., & Touyz, R. M. (2018). Diabetes, hypertension, and cardiovascular disease: clinical insights and vascular mechanisms. Canadian Journal of Cardiology, 34(5), 575-584. Recuperado de: [link](https://www.sciencedirect.com/science/article/pii/S0828282X1731214X)
 
+### Prevalencia y Factores de Riesgo
 Burnier, M., & Egan, B. M. (2019). Adherence in hypertension: a review of prevalence, risk factors, impact, and management. Circulation research, 124(7), 1124-1140. Recuperado de: [link](https://www.ahajournals.org/doi/pdf/10.1161/CIRCRESAHA.118.313220)
 
 Umesawa, M., & Kobashi, G. (2017). Epidemiology of hypertensive disorders in pregnancy: prevalence, risk factors, predictors and prognosis. Hypertension Research, 40(3), 213-220. Recuperado de: [link](https://www.proquest.com/openview/2a09c0798e2aef7ad8e65555e6424206/1.pdf/advanced)
 
 Petermann, F., Durán, E., Labraña, A. M., Martínez, M. A., Leiva, A. M., Garrido-Méndez, A., ... & Celis-Morales, C. (2017). Factores de riesgo asociados al desarrollo de hipertensión arterial en Chile. Revista médica de Chile, 145(8), 996-1004. Recuperado de: [link](https://scielo.conicyt.cl/scielo.php?pid=S0034-98872017000800996&script=sci_arttext&tlng=e)
 
+### Hábitos de vida
 Celis-Morales, C., Salas, C., Álvarez, C., Aguilar Farías, N., Ramírez Campillos, R., Leppe, J., ... & Willis, N. (2015). Un mayor nivel de actividad física se asocia a una menor prevalencia de factores de riesgo cardiovascular en Chile: resultados de la Encuesta Nacional de Salud 2009-2010. Revista médica de Chile, 143(11), 1435-1443. Recuperado de: [link](https://scielo.conicyt.cl/scielo.php?pid=S0034-98872015001100009&script=sci_arttext&tlng=e)
+
+### Tabaquismo
+Virdis, A., Giannarelli, C., Fritsch Neves, M., Taddei, S., & Ghiadoni, L. (2010). Cigarette smoking and hypertension. Current pharmaceutical design, 16(23), 2518-2525. Recuperado de: [Link](https://www.researchgate.net/profile/Agostino-Virdis/publication/44675523_Cigarette_Smoking_and_Hypertension/links/578f3f3c08aecbca4cadb3bd/Cigarette-Smoking-and-Hypertension.pdf)
+
+Niskanen, L., Laaksonen, D. E., Nyyssönen, K., Punnonen, K., Valkonen, V. P., Fuentes, R., ... & Salonen, J. T. (2004). Inflammation, abdominal obesity, and smoking as predictors of hypertension. Hypertension, 44(6), 859-865. Recuperado de: [link](https://www.ahajournals.org/doi/full/10.1161/01.hyp.0000146691.51307.84)
 
 Tibazarwa, K. B., & Damasceno, A. A. (2014). Hypertension in developing countries. Canadian Journal of Cardiology, 30(5), 527-533. Recuperado de: [link](https://www.sciencedirect.com/science/article/pii/S0828282X14001378?casa_token=Qqi_mcn8S5MAAAAA:1SH-Du8OOyMr2YTrngf8QUFN3oZgKgAZVZYscNkrYXS2j1uJEtEjDMkPv_48mUwNtEVXc2C0qUc)
 
