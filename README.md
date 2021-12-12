@@ -3,7 +3,7 @@
 ## Abstract
 
 **Resumen.** La hipertensión arterial es el prinicipal factor de mortalidad atribuíble, pero, a la vez, modificable. Descuidar un diagnóstico
-de hipertensión arterial no solo es riesgoso en tanto compromete a los organos, sino que es sencillo debido a su carácter asintomático.
+de hipertensión arterial no solo es riesgoso en tanto compromete los órganos (_órganos diana_), sino que es sencillo debido a su carácter asintomático.
 Numerosos factores de riesgo como la diabetes, el peso y hábitos poco saludables podrían explicar el desarrollo de hipertención. A
 su vez, la hipertensión está igualmente asociada a la aprición de estas enfermedades. **Métodos.** Con los datos de la ENS-17 se realizó
 un análisis descriptivo y de asociación con factores de riesgo bajo la consideración de niveles de confianza convencionales (95%).
