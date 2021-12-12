@@ -1,25 +1,22 @@
 ---
-title: "notebook"
+title: "Notebook"
 author: "samadariaga@uc.cl"
 date: "11-12-2021"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
 ipak <- function(pkg){
     new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
-    if (length(new.pkg)) 
+    if (length(new.pkg))
         install.packages(new.pkg, dependencies = TRUE)
     sapply(pkg, require, character.only = TRUE)
 }
 
 # Uso
-packages <- c("tidyverse", "vtable", "tableone")
+packages <- c("tidyverse", "vtable", "tableone", "gtsummary",
+              "patchwork", "texreg", "finalfit")
 ipak(packages)
-
-data = rio::import("C:/Users/Temporal/Desktop/Puc/EYP1510/EYP1510 HTA Prevalencia y Factores de Riesgo/Base Salud 2017.xlsx")
 ```
 
 # Preámbulo
@@ -37,9 +34,41 @@ packages <- c("tidyverse", "vtable", "tableone")
 ipak(packages)
 ```
 
+# Intérvalos de confianza
+
+```{r}
+icp = function(x, prop){
+  require(dplyr)
+  x = x %>% na.omit %>% as.numeric
+  p = prop
+  z = 1.96
+  s = p*(1-p)
+  s = s**2
+  n = length(x)
+  ic = round((p + c(-z, z)*s/n**.5)*100,2)
+  return(
+    print(paste0("[IC95%",ic[1],"%-",ic[2],"%]"))
+  )
+}
+
+ic = function(x, rounded = 3){
+  require(dplyr)
+  x = x %>% na.omit %>% as.numeric
+  mu = mean(x)
+  z = 1.96
+  s = sd(x)
+  n = length(x)
+  ic = round((mu + c(-z, z)*s/n**.5), rounded)
+  return(
+    paste0("[IC95% ",ic[1],"-",ic[2],"]")
+  )
+}
+```
+
+
 # Selección
 
-```{r, eval = FALSE}
+```{r}
 data = rio::import("Base Salud 2017.xlsx")
 data[data == -8888] = NA
 data[data == -9999] = NA
@@ -48,16 +77,21 @@ data[data$Diabetes == 3,]$Diabetes = NA
 data[data$Presión_alta == 4,]$Presión_alta = NA
 ```
 
-# Variables
+# Selección y corrección de variables
 
 ```{r}
-data = data %>%
-  select(Edad, Sexo, Depresión, 
-         Fuma, Presión_alta, Diabetes, 
-         Trabajo, presión_PAS, presión_PAD, 
-         Peso, Talla, Asma, Colesterol_Total,
-         `n°_cigarrillos`) %>% 
-  mutate(Edad_cat = case_when(Edad<25~1,
+data = data  %>% 
+  mutate(Zona = case_when(Region < 5~1,
+                          Region <7~3,
+                          Region <8~2,
+                          Region <11~3,
+                          Region >=11~4),
+         Zona = factor(Zona, levels = c(1,2,3,4),
+                       labels = c("Norte", "Metropolitana",
+                                  "Centro-Sur", "Sur")),
+         Metropolitana = ifelse(Zona == "Metropolitana", 1,0),
+         Metropolitana = factor(Zona, levels = c(0,1)),
+         Edad_cat = case_when(Edad<25~1,
                               Edad<45~2,
                               Edad<65~3,
                               Edad>=65~4),
@@ -66,12 +100,11 @@ data = data %>%
                                       "25 a 44 años",
                                       "45 a 64 años",
                                       "65 años o más")),
-         Sexo = factor(Sexo, levels = c(1,2),
-                       labels =c("Mujer", "Hombre")),
-         Depresión = factor(Depresión, levels = c(1,2),
-                            labels = c("Sí", "No")),
-         Tabajo = factor(Trabajo, levels = c(1,2),
-                            labels = c("Sí", "No")),
+         Hombre = factor(2-Sexo),
+         Depresión = factor(Depresión-1, levels = c(1,0),
+                            labels = c("No", "Sí")),
+         Trabajo = factor(Trabajo-1, levels = c(1,0),
+                            labels = c("No", "Sí")),
          Talla = Talla/100,
          IMC = Peso/Talla**2,
          IMC_Cat = case_when(IMC<18.5~1,
@@ -83,30 +116,111 @@ data = data %>%
                                      "Normopeso",
                                      "Sobrepeso",
                                      "Obesidad")),
-         Colesterol_Total = ifelse(Colesterol_Total > 200,1,2),
-         Colesterol_Total = factor(Colesterol_Total, levels =c(1,2),
-                                   labels = c("Sí", "No")),
-         Fuma = ifelse(Fuma == 1 | Fuma == 2, 1,2),
-         Fuma  = factor(Fuma, levels = c(1,2),
-                        labels = c("Sí", "No")),
+         Hipercolesterolemia = ifelse(Colesterol_Total > 200,1,0),
+         Hipercolesterolemia = factor(Hipercolesterolemia, levels =c(0,1),
+                                   labels = c("No", "Sí")),
+         Fuma = ifelse(Fuma == 1 | Fuma == 2, 1,0),
+         Fuma  = factor(Fuma, levels = c(0,1),
+                        labels = c("No", "Sí")),
          Presión_alta = factor(Presión_alta, levels = c(1,2,3),
                                labels =c("Una vez",
                                          "Más de una vez",
                                          "Nunca")),
-         HTA = ifelse(presión_PAD >80 | presión_PAS >140,1,2),
-         HTA = factor(HTA, levels = c(1,2),
-                      labels = c("Sí", "No"))) %>% 
-  rename("Presión alta" = `Presión_alta`,
-         "Presión Arterial Sistólica" = presión_PAS,
-         "Presión Arterial Diastólica" = presión_PAD,
-         "Hipercolesterolemia" = `Colesterol_Total`)
+        Sexo = factor(Sexo, levels = c(1,2),
+                      labels = c("Hombre", "Mujer")),
+        N = 1,
+        HTA = factor(ifelse(presión_PAD >80 | presión_PAS >140,1,0),
+                     levels = c(0,1), labels = c("No", "Sí")),
+        Diabetes = factor(2-Diabetes, levels = c(0,1),
+                            labels = c("No", "Sí"))) %>% 
+  
+  select(N,
+         HTA,
+         Sexo,
+         Edad_cat, 
+         IMC,
+         Hipercolesterolemia,
+         Hombre, 
+         Edad, 
+         IMC_Cat,
+         Zona,
+         Trabajo,
+         presión_PAS,
+         presión_PAD,
+         Colesterol_Total,
+         Diabetes,
+         Fuma,
+         Depresión, 
+         Presión_alta) %>% 
+  rename("PA alta" = `Presión_alta`,
+         PAS = presión_PAS,
+         PAD = presión_PAD,
+         "Categoría de edad" = Edad_cat,
+         "Categoría de IMC" = IMC_Cat,
+         "Colesterol total" = Colesterol_Total)
+```
+
+### TABLA 1. Estadísticos Descriptivos de las Variables
+
+```{r}
+tabla = tableone::CreateTableOne(vars = names(data), data = data)
+p <- print(tabla, printToggle = FALSE, noSpaces = TRUE)
+knitr::kable(p, booktabs = TRUE, format = "simple")
+```
+
+### TABLA 2a. Presión Arterial
+
+```{r}
+data[c("PAS","PAD","Sexo")] %>%
+  tbl_summary(by = Sexo, 
+              percent = "row",
+              missing = "no")
+
+```
+
+
+### TABLA 2b. Presión Arterial y Grupo Etario
+
+```{r}
+data[c("IMC", "PAS","PAD","Categoría de edad")] %>%
+  tbl_summary(by = `Categoría de edad`, 
+              percent = "row",
+              missing = "no")
+```
+
+### Table 4c. Variables Antropométricas y Presión Arterial y Zona
+
+```{r}
+data[c("IMC","PAS","PAD","Zona")] %>%
+  tibble %>% 
+  tbl_summary(by = Zona, 
+              percent = "row",
+              missing = "no")
+```
+
+
+### TABLA 3. Prevalencia
+
+```{r}
+data[,-c(1,5,6,7,8,9,12,13,14,15,16,17,18)] %>% 
+  select(HTA, Sexo, `Categoría de edad`, Zona, Trabajo) %>% 
+  tbl_summary(by = HTA, percent = "row") %>%
+  add_p()
 ```
 
 
 
-HOLA 1   HOLA 2
------- -------
-Crack    Crack
-Crack 1   Crack2
+
+
+
+
+
+
+
+
+
+
+
+
 
 

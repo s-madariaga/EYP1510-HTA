@@ -144,12 +144,6 @@ data = data  %>%
          "Categoría de edad" = Edad_cat,
          "Categoría de IMC" = IMC_Cat,
          "Colesterol total" = Colesterol_Total)
-FUMA = ifelse(data$Fuma == 1 | data$Fuma == 2, 1,0)
-factor(FUMA, levels = c(0,1),
-      labels = c("No", "Sí") ) %>% 
-  table
-
-icp(data$`PA alta`, prop = .33)
 
 # Descriptivas ------------------------------------------------------------
 data %>% head
@@ -164,14 +158,10 @@ knitr::kable(p, booktabs = TRUE, format = "latex")
 # HIPERTENSIÓN
 icp(x = as.numeric(data$HTA), prop = 0.37)
 
-
-
 # SISTÓLICA A DIASTÓLICA
 ic(data$PAS, rounded = 3)
 ic(data$PAD, rounded = 3)
 
-# VALORES P ---------------------------------------------------------------
-t.test(data$PAD, alternative = "two.sided", mu = 80)
 
 ### PRESIÓN ARTERIAL ------------------------------------------------------
 data[c("PAS","PAD","Sexo")] %>%
@@ -192,9 +182,9 @@ data[c("PAS","PAD","Categoría de edad")] %>%
   cat
 
 #### ** ZONA -----------------------------------------------------------------
-data[c("PAS","PAD","Categoría de edad")] %>%
+data[c("IMC","PAS","PAD","Zona")] %>%
   tibble %>% 
-  tbl_summary(by = `Categoría de edad`, 
+  tbl_summary(by = Zona, 
               percent = "row",
               missing = "no") %>%
   as_gt() %>% 
@@ -207,15 +197,6 @@ data %>%
 
 
 # PREVALENCIA -------------------------------------------------------------
-
-fruitmachine = data %>% 
-  sapply(function(x) class(x) == "numeric") %>% 
-  as.vector
-
-## Continuas ---------------------------------------------------------------
-data[,fruitmachine] %>% 
-  tbl_summary
-
 
 ## SOCIODEMOGRÁFICOS -------------------------------------------------------
 data[,-c(1,5,6,7,8,9,12,13,14,15,16,17,18)] %>% 

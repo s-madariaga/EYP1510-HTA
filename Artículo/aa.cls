@@ -695,7 +695,7 @@
   \fancypagestyle{otherpage}{%
     \fancyhf{}%
     \fancyhead[CO]{\aa@headfont \aa@headings}%
-    \fancyhead[CE]{\aa@headfont \ifx\aa@idline\empty\aa@textidlineempty\else\aa@idline\fi}%
+    \fancyhead[CE]{\aa@headfont \ifx\aa@idline\empty\aa@contentsAutname \else\aa@idline\fi}%
     \fancyfoot[RO]{\aa@footfont \aa@numarticle\aa@pageof}%
     \fancyfoot[LE]{\aa@footfont \aa@numarticle\aa@pageof}%
     \renewcommand*{\headrulewidth}{\z@}%
@@ -2063,3 +2063,4 @@
 \endinput
 %%
 %% End of file `aa.cls'.
+
