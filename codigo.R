@@ -1,9 +1,40 @@
+# 
+# # Añadir intervalos de confianza
+# 
+#  ###########################
+#  # Segunda entrega EYP1510 #
+#  ###########################
+# 
 
-# Añadir intervalos de confianza
+icp = function(x, prop){
+  require(dplyr)
+  x = x %>% na.omit %>% as.numeric
+  p = prop
+  z = 1.96
+  s = p*(1-p)
+  s = s**2
+  n = length(x)
+  ic = round((p + c(-z, z)*s/n**.5)*100,2)
+  return(
+    print(paste0("[IC95%",ic[1],"%-",ic[2],"%]"))
+  )
+}
 
- ###########################
- # Segunda entrega EYP1510 #
- ###########################
+ic = function(x, rounded = 3){
+  require(dplyr)
+  x = x %>% na.omit %>% as.numeric
+  mu = mean(x)
+  z = 1.96
+  s = sd(x)
+  n = length(x)
+  ic = round((mu + c(-z, z)*s/n**.5), rounded)
+  return(
+    paste0("[IC95% ",ic[1],"-",ic[2],"]")
+  )
+}
+
+
+
 
 
 # Opciones ----------------------------------------------------------------
@@ -11,9 +42,19 @@ options(scipen = 999)
  rm(list = ls())
 
 # Paquetes ----------------------------------------------------------------
-library(tidyverse)
-library(vtable)
-library(tableone)
+
+ipak <- function(pkg){
+    new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+    if (length(new.pkg))
+        install.packages(new.pkg, dependencies = TRUE)
+    sapply(pkg, require, character.only = TRUE)
+}
+
+# Uso
+packages <- c("tidyverse", "vtable", "tableone", "gtsummary",
+              "patchwork", "texreg", "finalfit")
+ipak(packages)
+ 
 
 # Importación -------------------------------------------------------------
 data = rio::import("Base Salud 2017.xlsx")
@@ -23,138 +64,331 @@ data[data == -5555] = NA
 data[data$Diabetes == 3,]$Diabetes = NA
 data[data$Presión_alta == 4,]$Presión_alta = NA
 
-vtable(data)
 
-# Variables ---------------------------------------------------------------
-
-# Corrección y creación de variables
-data = data %>% 
-  mutate(Zona = case_when(Region<5~1,
-                            Region<7~2,
-                            Region<8~0,
-                            Region<11~2,
-                            Region>=11~3),
-         Zona = factor(Zona, levels = c(0,1,2,3),
-                         labels = c("RM",
-                                    "Norte",
-                                    "Centro-sur",
-                                    "Sur")),
-         Comuna = factor(Comuna),
-         Edad_Cat = case_when(Edad<25~1,
+# Selección ---------------------------------------------------------------
+data = data  %>% 
+  mutate(Zona = case_when(Region < 5~1,
+                          Region <7~3,
+                          Region <8~2,
+                          Region <11~3,
+                          Region >=11~4),
+         Zona = factor(Zona, levels = c(1,2,3,4),
+                       labels = c("Norte", "Metropolitana",
+                                  "Centro-Sur", "Sur")),
+         Metropolitana = ifelse(Zona == "Metropolitana", 1,0),
+         Metropolitana = factor(Zona, levels = c(0,1)),
+         Edad_cat = case_when(Edad<25~1,
                               Edad<45~2,
                               Edad<65~3,
                               Edad>=65~4),
-         Edad_Cat = factor(Edad_Cat, levels = c(1,2,3,4),
+         Edad_cat = factor(Edad_cat, levels = c(1,2,3,4),
                            labels = c("15 a 24 años",
                                       "25 a 44 años",
                                       "45 a 64 años",
                                       "65 años o más")),
-         Sexo = factor(Sexo, levels = c(1,2),
-                       labels = c("Hombre", "Mujer")),
-         `Que_diría_de_su_salud?` = factor(`Que_diría_de_su_salud?`,
-                                           levels = c(1,2,3,4,5),
-                                           labels = c("Muy Buena",
-                                                      "Buena",
-                                                      "Regular",
-                                                      "Mala",
-                                                      "Muy Mala")),
-         `Usa_lentes?` = factor(`Usa_lentes?`, levels = c(1,2),
-                                labels = c("Sí", "No")),
-         `Se_ha_sentido_deprimido?` = factor(`Se_ha_sentido_deprimido?`, 
-                                             levels = c(1,2,3),
-                                             labels = c("Sí",
-                                                        "No",
-                                                        "Consumo de antidepresivos")),
-         Depresión = factor(Depresión, levels = c(1,2),
-                            labels = c("Sí", "No")),
-         Fuma = factor(Fuma, level = c(1,2),
-                       labels = c("Sí", "No")),
-         Presión_alta = factor(Presión_alta, levels = c(1,2,3,4),
-                               labels = c("Si, una sola vez", 
-                                          "Si, mas de una vez", 
-                                          "No, nunca", 
-                                          "No recuerdo")),
-         Diabetes = factor(Diabetes, levels = c(1,2),
-                           labels = c("Sí", "No")),
-         Fonasa = ifelse(Previsión %in% c(1,2,3,4,5),1,0),
-         Previsión = factor(Previsión, levels = c(1,2,3,4,5,6,7,8,9),
-                            labels = c("Fonasa A",
-                                       "Fonasa B", 
-                                       "Fonasa C", 
-                                       "Fonasa D", 
-                                       "Fonasa desconocido", 
-                                       "FFAA", 
-                                       "Isapre", 
-                                       "Ninguno", 
-                                       "Otro")),
-         Nivel_educacional = case_when(Nivel_educacional == 1~0,
-                                       Nivel_educacional <8~1,
-                                       Nivel_educacional <10~2,
-                                       Nivel_educacional <13~3,
-                                       Nivel_educacional >=13~4),
-         Nivel_educacional = factor(Nivel_educacional, levels = c(0,1,2,3,4),
-                                    labels = c("Nunca asistió", 
-                                               "Ed.Basica o menos", 
-                                               "Ed.Media", 
-                                               "Tecnico", 
-                                               "Universitaro")),
-         Trabajo = factor(Trabajo, levels = c(1,2),
-                          labels = c("Sí", "No")),
-         TallaM = Talla/100,
-         IMC = Peso/TallaM**2,
-         Asma = factor(Asma, levels = c(1,2),
-                       labels = c("Sí", "No")),
-         Colesterol_alto = ifelse(Colesterol_Total >= 200, "Sí","No"),
-         Colesterol_alto = factor(Colesterol_alto, levels = c(1,2),
-                                  labels = c("Sí", "No")),
-         Sospecha_Depresion = factor(Sospecha_Depresion, levels = c(0,1),
-                                     labels = c("No", "Sí")) %>% 
-           ifelse(Sospecha_Depresion == 1, "Sí", "No"))  %>% 
-  rename("Categoría de Edad" = Edad_Cat,
-         "Percepción Salud" = `Que_diría_de_su_salud?`,
-         "Lentes" = `Usa_lentes?`,
-         "Precepción de Depresión" = `Se_ha_sentido_deprimido?`,
-         "N de Cigarrillos" = `n°_cigarrillos`,
-         "Presión Alta" = Presión_alta,
-         "Nivel educacional" = Nivel_educacional,
-         "Presión Arterial Sistólica" = presión_PAS,
-         "Presión Arterial Diastólica" = presión_PAD,
-         "Colesterol Total" = Colesterol_Total,
-         "Colesterol Alto" = Colesterol_alto)
+         Hombre = factor(2-Sexo),
+         Depresión = factor(Depresión-1, levels = c(1,0),
+                            labels = c("No", "Sí")),
+         Trabajo = factor(Trabajo-1, levels = c(1,0),
+                            labels = c("No", "Sí")),
+         Talla = Talla/100,
+         IMC = Peso/Talla**2,
+         IMC_Cat = case_when(IMC<18.5~1,
+                             IMC<25~2,
+                             IMC<30~3,
+                             IMC>=30~4),
+         IMC_Cat = factor(IMC_Cat, levels = c(1,2,3,4),
+                          labels = c("Peso insuficiente",
+                                     "Normopeso",
+                                     "Sobrepeso",
+                                     "Obesidad")),
+         Hipercolesterolemia = ifelse(Colesterol_Total > 200,1,0),
+         Hipercolesterolemia = factor(Hipercolesterolemia, levels =c(0,1),
+                                   labels = c("No", "Sí")),
+         Fuma = ifelse(Fuma == 1 | Fuma == 2, 1,0),
+         Fuma  = factor(Fuma, levels = c(0,1),
+                        labels = c("No", "Sí")),
+         Presión_alta = factor(Presión_alta, levels = c(1,2,3),
+                               labels =c("Una vez",
+                                         "Más de una vez",
+                                         "Nunca")),
+        Sexo = factor(Sexo, levels = c(1,2),
+                      labels = c("Hombre", "Mujer")),
+        N = 1,
+        HTA = factor(ifelse(presión_PAD >80 | presión_PAS >140,1,0),
+                     levels = c(0,1), labels = c("No", "Sí")),
+        Diabetes = factor(2-Diabetes, levels = c(0,1),
+                            labels = c("No", "Sí"))) %>% 
+  
+  select(N,
+         HTA,
+         Sexo,
+         Edad_cat, 
+         IMC,
+         Hipercolesterolemia,
+         Hombre, 
+         Edad, 
+         IMC_Cat,
+         Zona,
+         Trabajo,
+         presión_PAS,
+         presión_PAD,
+         Colesterol_Total,
+         Diabetes,
+         Fuma,
+         Depresión, 
+         Presión_alta) %>% 
+  rename("PA alta" = `Presión_alta`,
+         PAS = presión_PAS,
+         PAD = presión_PAD,
+         "Categoría de edad" = Edad_cat,
+         "Categoría de IMC" = IMC_Cat,
+         "Colesterol total" = Colesterol_Total)
+FUMA = ifelse(data$Fuma == 1 | data$Fuma == 2, 1,0)
+factor(FUMA, levels = c(0,1),
+      labels = c("No", "Sí") ) %>% 
+  table
+
+icp(data$`PA alta`, prop = .33)
+
+# Descriptivas ------------------------------------------------------------
+data %>% head
+### TABLA 1 ---------------------------------------------------------------
+tabla = tableone::CreateTableOne(vars = names(data), data = data);tabla
+p <- print(tabla, printToggle = FALSE, noSpaces = TRUE)
+knitr::kable(p, booktabs = TRUE, format = "latex")
+
+
+### INTERVALOS DE CONFIANZA -----------------------------------------------
+
+# HIPERTENSIÓN
+icp(x = as.numeric(data$HTA), prop = 0.37)
 
 
 
+# SISTÓLICA A DIASTÓLICA
+ic(data$PAS, rounded = 3)
+ic(data$PAD, rounded = 3)
 
-# Variable hiperetnsión ---------------------------------------------------
-data$Hipertensión = ifelse(data$presión_PAD > 80 | 
-                             data$presión_PAS > 140,1,0)
+# VALORES P ---------------------------------------------------------------
+t.test(data$PAD, alternative = "two.sided", mu = 80)
 
-# Análisis Sociodemográfico -----------------------------------------------
-library(psych)
-describe(data)
+### PRESIÓN ARTERIAL ------------------------------------------------------
+data[c("PAS","PAD","Sexo")] %>%
+  tbl_summary(by = Sexo, 
+              percent = "row",
+              missing = "no") %>%
+  as_gt() %>% 
+  gt::as_latex() %>% 
+  cat
 
-descriptivo = function(x){
-  cbind("mean (SD)" = paste0(round(mean(x),2)," (", round(sd(x),2),")"),
-        "N (%)" = paste0(length(x)," (", round(length(x)*100/nrow(data),2),"%)"))
-}
+#### ** TRAMOS DE EDAD -------------------------------------------------------
+data[c("PAS","PAD","Categoría de edad")] %>%
+  tbl_summary(by = `Categoría de edad`, 
+              percent = "row",
+              missing = "no") %>%
+  as_gt() %>% 
+  gt::as_latex() %>% 
+  cat
 
-psych::describe()
+#### ** ZONA -----------------------------------------------------------------
+data[c("PAS","PAD","Categoría de edad")] %>%
+  tibble %>% 
+  tbl_summary(by = `Categoría de edad`, 
+              percent = "row",
+              missing = "no") %>%
+  as_gt() %>% 
+  gt::as_latex() %>% 
+  cat
 
-data %>% 
-  select(Edad, presión_PAD) %>% 
-  lapply(na.omit) %>% 
-  lapply()
-
-
-data %>% 
-  select(Edad, presión_PAD) %>% 
-  stargazer::stargazer(omit.stats = c("min"), type = "text")
-
-# Presión Arterial --------------------------------------------------------
-
-## Sólo edad --------------------------------------------------------------
+data %>%
+  tbl_summary(percent = "col")
 
 
+
+# PREVALENCIA -------------------------------------------------------------
+
+fruitmachine = data %>% 
+  sapply(function(x) class(x) == "numeric") %>% 
+  as.vector
+
+## Continuas ---------------------------------------------------------------
+data[,fruitmachine] %>% 
+  tbl_summary
+
+
+## SOCIODEMOGRÁFICOS -------------------------------------------------------
+data[,-c(1,5,6,7,8,9,12,13,14,15,16,17,18)] %>% 
+  select(HTA, Sexo, `Categoría de edad`, Zona, Trabajo) %>% 
+  tbl_summary(by = HTA, percent = "row") %>%
+  add_p() %>% 
+  as_gt() %>%
+  gt::as_latex() %>% 
+  cat
+
+
+## FACTORES DE RIESGO ------------------------------------------------------
+data %>%
+  select(HTA,`Categoría de edad`, `Categoría de IMC`, 
+         Diabetes, Fuma, Hipercolesterolemia, Depresión) %>% 
+  tbl_summary(by = HTA, percent = "row",
+              missing = "no") %>% 
+  add_p %>% 
+  as_gt() %>%
+  gt::as_latex() %>% 
+  cat
+
+data[c()] %>% names
+
+oddsratio(xtabs(~`Categoría de IMC`+HTA, data = data))
+
+oddsratio(xtabs(~`Categoría de edad`+HTA, data = data))
+
+
+# IDEA DE REGRESIÓN LINEAL ------------------------------------------------
+
+screenreg(l = list(lm(PAD~Edad, data = data),
+                   lm(PAD~Edad+Hombre, data = data),
+                   lm(PAD~Edad+Hombre+`Colesterol total`, data = data)))
+
+# -------------------------------------------------------------------------
+
+# ODDS
+
+tabla1 = oddsratio.wald(xtabs(~`Categoría de edad`+HTA, data = data))$measure
+tabla2 = oddsratio.wald(xtabs(~`Categoría de IMC`+HTA, data = data))$measure
+tabla3a = oddsratio.wald(xtabs(~Sexo+HTA, data = data))$measure
+tabla3b = oddsratio.wald(xtabs(~Hombre+HTA, data = data))$measure
+tabla4 = oddsratio.wald(xtabs(~Diabetes+HTA, data = data))$measure
+tabla5 = oddsratio.wald(xtabs(~Fuma+HTA, data = data))$measure
+tabla6 = oddsratio.wald(xtabs(~Hipercolesterolemia+HTA, data = data))$measure
+tabla7 = oddsratio.wald(xtabs(~Depresión+HTA, data = data))$measure
+tabla = rbind(tabla1, tabla2,
+              tabla3a, tabla3b,
+              tabla4, tabla5,
+              tabla6, tabla7) %>% round(2) ;tabla
+p <- print(tabla, printToggle = FALSE, noSpaces = TRUE)
+knitr::kable(p, booktabs = TRUE, format = "latex")
+
+
+# valor-p
+tabla1 = oddsratio.wald(xtabs(~`Categoría de edad`+HTA, data = data))$p.value
+tabla2 = oddsratio.wald(xtabs(~`Categoría de IMC`+HTA, data = data))$p.value
+tabla3a = oddsratio.wald(xtabs(~Sexo+HTA, data = data))$p.value
+tabla3b = oddsratio.wald(xtabs(~Hombre+HTA, data = data))$p.value
+tabla4 = oddsratio.wald(xtabs(~Diabetes+HTA, data = data))$p.value
+tabla5 = oddsratio.wald(xtabs(~Fuma+HTA, data = data))$p.value
+tabla6 = oddsratio.wald(xtabs(~Hipercolesterolemia+HTA, data = data))$p.value
+tabla7 = oddsratio.wald(xtabs(~Depresión+HTA, data = data))$p.value
+tabla = rbind(tabla1, tabla2,
+              tabla3a, tabla3b,
+              tabla4, tabla5,
+              tabla6, tabla7) %>% round(2) ;tabla
+p <- print(tabla, printToggle = FALSE, noSpaces = TRUE)
+knitr::kable(p, booktabs = TRUE, format = "simple")
+
+
+### LOGÍSTICA ---------------------------------------------------------------
+# (no incluir)
+m1 = glm(HTA~Edad, data = data,  family = binomial)
+m2 = glm(HTA~Edad+Fuma+Trabajo, data = data,  family = binomial)
+m3 = glm(HTA~IMC+Diabetes++Hipercolesterolemia, data = data,  family = binomial)
+m4 = glm(HTA~Edad+Fuma+Trabajo+IMC+Diabetes+Hipercolesterolemia, data = data,  family = binomial)
+screenreg(l = list(m1, m2, m3, m4))
+texreg(list(m1,m2,m3,m4), dcolumn = TRUE, booktabs = TRUE,
+use.packages = FALSE, label = "tab:3", caption = "Two linear models.",
+float.pos = "h")
+
+
+
+### FIGURA 1 --------------------------------------------------------------
+figura11 = data %>% 
+  ggplot(aes(x = `Categoría de edad`, y = PAS, group = Sexo, 
+             color = Sexo)) +
+  geom_hline(yintercept = 140, color = "grey70") +
+  geom_point(stat = "summary", fun = mean, pch = 15, size = 2) +
+  geom_line(stat = "summary", fun = mean, pch = 15, size = 1) + xlab("")+
+  stat_summary(fun = mean,
+               geom = "errorbar",
+               fun.max = function(x) mean(x) + 1.96*sd(x)/length(x)**.5,
+               fun.min = function(x) mean(x) - 1.96*sd(x)/length(x)**.5,
+               width = .4, color = 1) +
+  theme_test() + 
+  geom_text(stat = 'summary', fun = mean, aes(label = round(..y.., 2)), 
+            nudge_x = 0.5, show_guide  = FALSE, size = 3, color = "grey38") +
+  scale_color_manual(values = c("#1F77B4", "#FF7F0E")) +
+  theme(legend.position = "none")
+
+
+figura12 =  data %>% 
+  ggplot(aes(x = `Categoría de edad`, y = PAD, group = Sexo, 
+             color = Sexo)) +
+  geom_hline(yintercept = 80, color = "grey70") +
+  geom_point(stat = "summary", fun = mean, pch = 15, size = 2) +
+  geom_line(stat = "summary", fun = mean, pch = 15, size = 1) + xlab("")+
+  stat_summary(fun = mean,
+               geom = "errorbar",
+               fun.max = function(x) mean(x) + 1.96*sd(x)/length(x)**.5,
+               fun.min = function(x) mean(x) - 1.96*sd(x)/length(x)**.5,
+               width = .4, color = 1) +
+  theme_test() +
+   geom_text(stat = 'summary', fun = mean, aes(label = round(..y.., 2)), 
+            nudge_x = 0.4, show_guide  = FALSE, size = 3, color = "grey38") +
+  scale_color_manual(values = c("#1F77B4", "#FF7F0E")) +
+  theme(legend.position = "bottom")
+
+figura11 / figura12
+
+data %>% names %>% cat(sep = "\n")
+
+
+
+# HTA
+# Sexo
+# Categoría de edad
+# IMC
+# Hipercolesterolemia
+# Hombre
+# Edad
+# Categoría de IMC
+# Zona
+# Trabajo
+# PAS
+# PAD
+# Colesterol total
+# Diabetes
+# Fuma
+# Depresión
+# PA alta
+# Edad>40
+# Edad de riesgo
+# Mayor
+
+
+
+data %>%
+  tbl_summary
+
+data %>%
+  tbl_summary(percent = "row", by = HTA) %>% 
+  add_p()
+
+
+data %>%
+  tbl_cross(
+    row = Diabetes,
+    col = HTA,
+    percent = "row",
+    missing = "no"
+  ) %>%
+  add_p()
+
+
+  
+stargazer(data, type = "text",
+          omit.summary.stat = c("p25", "p75","min", "max"))
+
+?stargazer
 ## Edad y Sexo ------------------------------------------------------------
 
 
@@ -163,6 +397,26 @@ data %>%
 ## Grupos sociodemográficos -----------------------------------------------
 
 ## Factores de Riesgo
+
+dependent = "HTA"
+explanatory = c("`Categoría de edad`", "`Categoría de IMC`", 
+                "Diabetes", "Fuma", "Hipercolesterolemia", "Depresión")
+Exp = c("Categoría de edad", "Categoría de IMC", 
+                "Diabetes", "Fuma", "Hipercolesterolemia", "Depresión")
+data[c(Exp, dependent)] %>%
+  tbl_summary(percent = "row", by = HTA) %>% 
+  add_p()
+data %>%
+   or_plot(dependent, explanatory)
+
+
+data[exploratory] %>% 
+  head
+
+
+
+
+# -------------------------------------------------------------------------
 
 
 

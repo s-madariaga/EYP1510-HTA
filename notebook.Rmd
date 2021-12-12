@@ -7,5 +7,106 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+ipak <- function(pkg){
+    new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+    if (length(new.pkg)) 
+        install.packages(new.pkg, dependencies = TRUE)
+    sapply(pkg, require, character.only = TRUE)
+}
+
+# Uso
+packages <- c("tidyverse", "vtable", "tableone")
+ipak(packages)
+
+data = rio::import("C:/Users/Temporal/Desktop/Puc/EYP1510/EYP1510 HTA Prevalencia y Factores de Riesgo/Base Salud 2017.xlsx")
 ```
+
+# Preámbulo
+
+```{r, eval = FALSE}
+ipak <- function(pkg){
+    new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+    if (length(new.pkg)) 
+        install.packages(new.pkg, dependencies = TRUE)
+    sapply(pkg, require, character.only = TRUE)
+}
+
+# Uso
+packages <- c("tidyverse", "vtable", "tableone")
+ipak(packages)
+```
+
+# Selección
+
+```{r, eval = FALSE}
+data = rio::import("Base Salud 2017.xlsx")
+data[data == -8888] = NA
+data[data == -9999] = NA
+data[data == -5555] = NA
+data[data$Diabetes == 3,]$Diabetes = NA
+data[data$Presión_alta == 4,]$Presión_alta = NA
+```
+
+# Variables
+
+```{r}
+data = data %>%
+  select(Edad, Sexo, Depresión, 
+         Fuma, Presión_alta, Diabetes, 
+         Trabajo, presión_PAS, presión_PAD, 
+         Peso, Talla, Asma, Colesterol_Total,
+         `n°_cigarrillos`) %>% 
+  mutate(Edad_cat = case_when(Edad<25~1,
+                              Edad<45~2,
+                              Edad<65~3,
+                              Edad>=65~4),
+         Edad_cat = factor(Edad_cat, levels = c(1,2,3,4),
+                           labels = c("15 a 24 años",
+                                      "25 a 44 años",
+                                      "45 a 64 años",
+                                      "65 años o más")),
+         Sexo = factor(Sexo, levels = c(1,2),
+                       labels =c("Mujer", "Hombre")),
+         Depresión = factor(Depresión, levels = c(1,2),
+                            labels = c("Sí", "No")),
+         Tabajo = factor(Trabajo, levels = c(1,2),
+                            labels = c("Sí", "No")),
+         Talla = Talla/100,
+         IMC = Peso/Talla**2,
+         IMC_Cat = case_when(IMC<18.5~1,
+                             IMC<25~2,
+                             IMC<30~3,
+                             IMC>=30~4),
+         IMC_Cat = factor(IMC_Cat, levels = c(1,2,3,4),
+                          labels = c("Peso insuficiente",
+                                     "Normopeso",
+                                     "Sobrepeso",
+                                     "Obesidad")),
+         Colesterol_Total = ifelse(Colesterol_Total > 200,1,2),
+         Colesterol_Total = factor(Colesterol_Total, levels =c(1,2),
+                                   labels = c("Sí", "No")),
+         Fuma = ifelse(Fuma == 1 | Fuma == 2, 1,2),
+         Fuma  = factor(Fuma, levels = c(1,2),
+                        labels = c("Sí", "No")),
+         Presión_alta = factor(Presión_alta, levels = c(1,2,3),
+                               labels =c("Una vez",
+                                         "Más de una vez",
+                                         "Nunca")),
+         HTA = ifelse(presión_PAD >80 | presión_PAS >140,1,2),
+         HTA = factor(HTA, levels = c(1,2),
+                      labels = c("Sí", "No"))) %>% 
+  rename("Presión alta" = `Presión_alta`,
+         "Presión Arterial Sistólica" = presión_PAS,
+         "Presión Arterial Diastólica" = presión_PAD,
+         "Hipercolesterolemia" = `Colesterol_Total`)
+```
+
+
+
+HOLA 1   HOLA 2
+------ -------
+Crack    Crack
+Crack 1   Crack2
+
 
