@@ -3,7 +3,12 @@ title: "HTA Prevalencia y Factores de Riesgo"
 subtitle: "Notebook"
 author: "samadariaga@uc.cl"
 date: "11-12-2021"
-output: html_document
+output:
+  pdf_document: default
+header-includes:
+   - \usepackage{dcolumn}
+   - \usepackage{caption,setspace}
+   - \captionsetup{font={small,stretch=0.80}}
 ---
 
 ```{r setup, include=FALSE}
@@ -271,6 +276,8 @@ figura11 + figura12
 
 ### TABLA 2b. Presión Arterial y Grupo Etario
 
+\footnotesize
+
 ```{r, results='asis'}
 data[c("IMC", "PAS","PAD","Categoría de edad")] %>%
   tbl_summary(by = `Categoría de edad`, 
@@ -281,6 +288,7 @@ data[c("IMC", "PAS","PAD","Categoría de edad")] %>%
   cat
 ```
 
+\normalsize
 
 ### Table 2c. Variables Antropométricas y Presión Arterial y Zona
 
@@ -788,23 +796,23 @@ m4 = glm(HTA~`Categoría de edad`+Hombre+Diabetes+Hipercolesterolemia+Fuma+Traba
 # screenreg(l = list(m1, m2, m3, m4))
 
 # Latex:
-# texreg(list(m1,m2,m3,m4), dcolumn = TRUE, booktabs = TRUE,
-# use.packages = FALSE, label = "tab:3", caption = "Modelos de Regresión Logística",
-# float.pos = "h")
+texreg(list(m1,m2,m3,m4), dcolumn = TRUE, booktabs = TRUE,
+use.packages = FALSE, label = "tab:3", caption = "Modelos de Regresión Logística",
+float.pos = "h")
 
 # html version
-htmlreg(list(m1,m2,m3,m4), dcolumn = TRUE, booktabs = TRUE,
-use.packages = FALSE, label = "tab:3", caption = "Nota.",
-float.pos = "h", digits = 3,
-custom.model.names=c("Modelo 1", "Modelo 2", "Modelo 3", "Modelo 4"), custom.coef.names = c("Constante",
-                      "25 a 44 años",
-                      "45 a 64 años",
-                      "65 años o más",
-                      "Hombre",
-                      "Diabetes",
-                      "Hipercolesterolemia",
-                      "Fuma",
-                      "Trabajo"))
+# htmlreg(list(m1,m2,m3,m4), dcolumn = TRUE, booktabs = TRUE,
+# use.packages = FALSE, label = "tab:3", caption = "Nota.",
+# float.pos = "h", digits = 3,
+# custom.model.names=c("Modelo 1", "Modelo 2", "Modelo 3", "Modelo 4"), custom.coef.names = c("Constante",
+#                       "25 a 44 años",
+#                       "45 a 64 años",
+#                       "65 años o más",
+#                       "Hombre",
+#                       "Diabetes",
+#                       "Hipercolesterolemia",
+#                       "Fuma",
+#                       "Trabajo"))
 ```
 
 

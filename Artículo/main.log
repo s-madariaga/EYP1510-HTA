@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2021.9.4)  12 DEC 2021 14:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2021.9.4)  16 DEC 2021 14:08
 entering extended mode
 **./main.tex
 (main.tex
@@ -1148,62 +1148,62 @@ LaTeX Info: Redefining \nameref on input line 30.
 <img/25231.png, id=99, 352.40228pt x 352.40228pt>
 File: img/25231.png Graphic file (type png)
 <use img/25231.png>
-Package pdftex.def Info: img/25231.png  used on input line 43.
+Package pdftex.def Info: img/25231.png  used on input line 44.
 (pdftex.def)             Requested size: 8.80788pt x 8.80788pt.
 LaTeX Font Info:    Trying to load font information for OT1+txr on input line 4
-3.
+4.
 
 (C:\Users\Temporal\AppData\Roaming\MiKTeX\tex/latex/txfonts\ot1txr.fd
 File: ot1txr.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Trying to load font information for U+txsya on input line 4
-3.
+4.
 
 (C:\Users\Temporal\AppData\Roaming\MiKTeX\tex/latex/txfonts\utxsya.fd
 File: utxsya.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Trying to load font information for U+txsyb on input line 4
-3.
+4.
 
 (C:\Users\Temporal\AppData\Roaming\MiKTeX\tex/latex/txfonts\utxsyb.fd
 File: utxsyb.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Trying to load font information for U+txmia on input line 4
-3.
+4.
 
 (C:\Users\Temporal\AppData\Roaming\MiKTeX\tex/latex/txfonts\utxmia.fd
 File: utxmia.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Trying to load font information for U+txsyc on input line 4
-3.
+4.
 
 (C:\Users\Temporal\AppData\Roaming\MiKTeX\tex/latex/txfonts\utxsyc.fd
 File: utxsyc.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Trying to load font information for T1+txss on input line 4
-3.
+4.
 
 (C:\Users\Temporal\AppData\Roaming\MiKTeX\tex/latex/txfonts\t1txss.fd
 File: t1txss.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Font shape `T1/txss/m/n' will be
-(Font)              scaled to size 16.41594pt on input line 43.
+(Font)              scaled to size 16.41594pt on input line 44.
 LaTeX Font Info:    Font shape `T1/txss/b/n' in size <17.28> not available
-(Font)              Font shape `T1/txss/bx/n' tried instead on input line 43.
+(Font)              Font shape `T1/txss/bx/n' tried instead on input line 44.
 LaTeX Font Info:    Font shape `T1/txss/bx/n' will be
-(Font)              scaled to size 16.41594pt on input line 43.
+(Font)              scaled to size 16.41594pt on input line 44.
 LaTeX Font Info:    Font shape `T1/txss/m/n' will be
-(Font)              scaled to size 8.54997pt on input line 43.
+(Font)              scaled to size 8.54997pt on input line 44.
 LaTeX Font Info:    Font shape `T1/txss/b/n' in size <9> not available
-(Font)              Font shape `T1/txss/bx/n' tried instead on input line 43.
+(Font)              Font shape `T1/txss/bx/n' tried instead on input line 44.
 LaTeX Font Info:    Font shape `T1/txss/bx/n' will be
-(Font)              scaled to size 8.54997pt on input line 43.
+(Font)              scaled to size 8.54997pt on input line 44.
 LaTeX Font Info:    Font shape `T1/txr/b/n' in size <9> not available
-(Font)              Font shape `T1/txr/bx/n' tried instead on input line 43.
+(Font)              Font shape `T1/txr/bx/n' tried instead on input line 44.
 LaTeX Font Info:    Font shape `T1/txr/b/it' in size <9> not available
-(Font)              Font shape `T1/txr/bx/it' tried instead on input line 43.
+(Font)              Font shape `T1/txr/bx/it' tried instead on input line 44.
 LaTeX Font Info:    Font shape `T1/txr/b/n' in size <8> not available
-(Font)              Font shape `T1/txr/bx/n' tried instead on input line 43.
+(Font)              Font shape `T1/txr/bx/n' tried instead on input line 44.
 
 
 
@@ -1211,121 +1211,124 @@ IMPORTANT
 
 Class aa Warning: The running head built automatically from \author and \titlee
 xceeds the pagewidth, please supply a shorter form with \authorrunning and/or \
-titlerunning prior to \maketitle on input line 43.
+titlerunning prior to \maketitle on input line 44.
 
 IMPORTANT 
 
 LaTeX Font Info:    Font shape `T1/txss/m/n' will be
-(Font)              scaled to size 10.40245pt on input line 44.
+(Font)              scaled to size 10.40245pt on input line 45.
 LaTeX Font Info:    Font shape `T1/txss/b/n' in size <10.95> not available
-(Font)              Font shape `T1/txss/bx/n' tried instead on input line 44.
+(Font)              Font shape `T1/txss/bx/n' tried instead on input line 45.
 LaTeX Font Info:    Font shape `T1/txss/bx/n' will be
-(Font)              scaled to size 10.40245pt on input line 44.
+(Font)              scaled to size 10.40245pt on input line 45.
 LaTeX Font Info:    Trying to load font information for TS1+txr on input line 5
-0.
+1.
 (C:\Users\Temporal\AppData\Roaming\MiKTeX\tex/latex/txfonts\ts1txr.fd
 File: ts1txr.fd 2000/12/15 v3.1
 )
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
 LaTeX Font Info:    Font shape `T1/txss/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 56.
+(Font)              scaled to size 9.49997pt on input line 57.
 LaTeX Font Info:    Font shape `T1/txss/m/it' in size <10> not available
-(Font)              Font shape `T1/txss/m/sl' tried instead on input line 56.
+(Font)              Font shape `T1/txss/m/sl' tried instead on input line 57.
 LaTeX Font Info:    Font shape `T1/txss/m/sl' will be
-(Font)              scaled to size 9.49997pt on input line 56.
+(Font)              scaled to size 9.49997pt on input line 57.
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 64.
+Package hyperref Warning: Suppressing link with empty target on input line 68.
 
 [1{C:/Users/Temporal/AppData/Local/MiKTeX/pdftex/config/pdftex.map}
 
 
  <./img/25231.png>]
 LaTeX Font Info:    Trying to load font information for T1+txtt on input line 1
-04.
+05.
  (C:\Users\Temporal\AppData\Roaming\MiKTeX\tex/latex/txfonts\t1txtt.fd
 File: t1txtt.fd 2000/12/15 v3.1
 )
 
-Package hyperref Warning: Suppressing link with empty target on input line 113.
+Package hyperref Warning: Suppressing link with empty target on input line 115.
 
 
 [2]
 LaTeX Font Info:    Font shape `T1/txr/b/n' in size <10> not available
-(Font)              Font shape `T1/txr/bx/n' tried instead on input line 125.
-<img/figura1.pdf, id=124, 361.35pt x 722.7pt>
-File: img/figura1.pdf Graphic file (type pdf)
-<use img/figura1.pdf>
-Package pdftex.def Info: img/figura1.pdf  used on input line 224.
-(pdftex.def)             Requested size: 180.67456pt x 361.3491pt.
+(Font)              Font shape `T1/txr/bx/n' tried instead on input line 126.
+
+Underfull \vbox (badness 2990) has occurred while \output is active []
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 231.
+
+Package hyperref Warning: Suppressing link with empty target on input line 197.
 
 
 [3]
+<img/figura1.pdf, id=131, 361.35pt x 722.7pt>
+File: img/figura1.pdf Graphic file (type pdf)
+<use img/figura1.pdf>
+Package pdftex.def Info: img/figura1.pdf  used on input line 225.
+(pdftex.def)             Requested size: 198.74312pt x 397.48622pt.
+
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 234.
-
-
-LaTeX Warning: Float too large for page by 38.13483pt on input line 264.
+               Default added (so using `tbp') on input line 235.
 
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 270.
+               Default added (so using `tbp') on input line 271.
 
 
-Underfull \vbox (badness 2126) has occurred while \output is active []
-
-
-
-Package hyperref Warning: Suppressing link with empty target on input line 308.
+Package hyperref Warning: Suppressing link with empty target on input line 307.
 
 
 [4 <./img/figura1.pdf>]
 
-Package hyperref Warning: Suppressing link with empty target on input line 308.
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 312.
 
 
-[5]
-Underfull \hbox (badness 10000) in paragraph at lines 381--382
+Underfull \vbox (badness 4156) has occurred while \output is active []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 382--383
 []\T1/txr/m/n/8 Medicna Am-bu-la-to-ria. (20201). Re-trieved 11 De-cem-ber 2021
 , from
  []
 
 
-Underfull \hbox (badness 6300) in paragraph at lines 395--396
+Package hyperref Warning: Suppressing link with empty target on input line 390.
+
+
+[5]
+Underfull \hbox (badness 1087) in paragraph at lines 394--395
+[]\T1/txr/m/n/8 Riveros, A., Ce-bal-los, G., La-guna, R., & Sánchez-Sosa, J. J.
+ (2005). El
+ []
+
+
+Underfull \hbox (badness 6300) in paragraph at lines 396--397
 []\T1/txr/m/n/8 Saval (2011). Hay una relación muy peli-grosa en-tre la mu-jer
  fu-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 395--396
+Underfull \hbox (badness 10000) in paragraph at lines 396--397
 \T1/txr/m/n/8 madora y hor-monas. Re-trieved 11 De-cem-ber 2021, from
  []
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 408.
+Package hyperref Warning: Suppressing link with empty target on input line 409.
 
 
-[6]
-
-Package hyperref Warning: Suppressing link with empty target on input line 408.
-
-
-[7
+[6
 
 ] (main.aux) ) 
 Here is how much of TeX's memory you used:
- 26227 strings out of 479334
- 473587 string characters out of 2866952
- 789070 words of memory out of 3000000
+ 26226 strings out of 479334
+ 473581 string characters out of 2866952
+ 788070 words of memory out of 3000000
  43107 multiletter control sequences out of 15000+200000
  498890 words of font info for 168 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 102i,11n,103p,1885b,374s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 102i,12n,103p,1885b,378s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX/fonts/enc/dvips/base/8r.enc}<C:/Users/Te
 mporal/AppData/Roaming/MiKTeX/fonts/type1/public/txfonts/rtxi.pfb><C:/Users/Tem
 poral/AppData/Roaming/MiKTeX/fonts/type1/public/txfonts/rtxmi.pfb><C:/Users/Tem
@@ -1338,9 +1341,9 @@ hvr8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Program
  Files/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Program Files/MiKTeX/fonts/
 type1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/times/utmr8
 a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (7 pages, 184283 bytes).
+Output written on main.pdf (6 pages, 183723 bytes).
 PDF statistics:
- 216 PDF objects out of 1000 (max. 8388607)
- 39 named destinations out of 1000 (max. 500000)
+ 210 PDF objects out of 1000 (max. 8388607)
+ 38 named destinations out of 1000 (max. 500000)
  195 words of extra memory for PDF output out of 10000 (max. 10000000)
 
