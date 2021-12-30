@@ -6,6 +6,8 @@
 
 **Palabras claves.** _Presión arterial_, _factor etiológico_, _diabetes mellitus_, _accidentes cardiovasculares_, _vejez_.
 
+# Directorios
+
 ```
 .
 ├── Archivos
