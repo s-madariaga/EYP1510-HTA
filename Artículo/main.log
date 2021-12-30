@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2021.9.4)  16 DEC 2021 14:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2021.9.4)  30 DEC 2021 00:02
 entering extended mode
 **./main.tex
 (main.tex
@@ -1226,6 +1226,8 @@ LaTeX Font Info:    Trying to load font information for TS1+txr on input line 5
 (C:\Users\Temporal\AppData\Roaming\MiKTeX\tex/latex/txfonts\ts1txr.fd
 File: ts1txr.fd 2000/12/15 v3.1
 )
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 LaTeX Font Info:    Font shape `T1/txss/m/n' will be
 (Font)              scaled to size 9.49997pt on input line 57.
 LaTeX Font Info:    Font shape `T1/txss/m/it' in size <10> not available
@@ -1240,20 +1242,26 @@ Package hyperref Warning: Suppressing link with empty target on input line 68.
 
 
  <./img/25231.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 LaTeX Font Info:    Trying to load font information for T1+txtt on input line 1
 05.
- (C:\Users\Temporal\AppData\Roaming\MiKTeX\tex/latex/txfonts\t1txtt.fd
+
+(C:\Users\Temporal\AppData\Roaming\MiKTeX\tex/latex/txfonts\t1txtt.fd
 File: t1txtt.fd 2000/12/15 v3.1
 )
+Underfull \vbox (badness 1127) has occurred while \output is active []
 
-Package hyperref Warning: Suppressing link with empty target on input line 115.
+
+
+Package hyperref Warning: Suppressing link with empty target on input line 114.
 
 
 [2]
 LaTeX Font Info:    Font shape `T1/txr/b/n' in size <10> not available
 (Font)              Font shape `T1/txr/bx/n' tried instead on input line 126.
 
-Underfull \vbox (badness 2990) has occurred while \output is active []
+Underfull \vbox (badness 1264) has occurred while \output is active []
 
 
 
@@ -1267,6 +1275,9 @@ File: img/figura1.pdf Graphic file (type pdf)
 Package pdftex.def Info: img/figura1.pdf  used on input line 225.
 (pdftex.def)             Requested size: 198.74312pt x 397.48622pt.
 
+Underfull \vbox (badness 5091) has occurred while \output is active []
+
+
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 235.
@@ -1276,7 +1287,7 @@ LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 271.
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 307.
+Package hyperref Warning: Suppressing link with empty target on input line 309.
 
 
 [4 <./img/figura1.pdf>]
@@ -1285,19 +1296,16 @@ LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 312.
 
 
-Underfull \vbox (badness 4156) has occurred while \output is active []
+Package hyperref Warning: Suppressing link with empty target on input line 380.
 
 
+[5]
 Underfull \hbox (badness 10000) in paragraph at lines 382--383
 []\T1/txr/m/n/8 Medicna Am-bu-la-to-ria. (20201). Re-trieved 11 De-cem-ber 2021
 , from
  []
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 390.
-
-
-[5]
 Underfull \hbox (badness 1087) in paragraph at lines 394--395
 []\T1/txr/m/n/8 Riveros, A., Ce-bal-los, G., La-guna, R., & Sánchez-Sosa, J. J.
  (2005). El
@@ -1324,11 +1332,11 @@ Package hyperref Warning: Suppressing link with empty target on input line 409.
 Here is how much of TeX's memory you used:
  26226 strings out of 479334
  473581 string characters out of 2866952
- 788070 words of memory out of 3000000
+ 790067 words of memory out of 3000000
  43107 multiletter control sequences out of 15000+200000
  498890 words of font info for 168 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 102i,12n,103p,1885b,378s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 102i,12n,103p,1885b,386s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX/fonts/enc/dvips/base/8r.enc}<C:/Users/Te
 mporal/AppData/Roaming/MiKTeX/fonts/type1/public/txfonts/rtxi.pfb><C:/Users/Tem
 poral/AppData/Roaming/MiKTeX/fonts/type1/public/txfonts/rtxmi.pfb><C:/Users/Tem
@@ -1341,7 +1349,7 @@ hvr8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Program
  Files/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Program Files/MiKTeX/fonts/
 type1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/times/utmr8
 a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (6 pages, 183723 bytes).
+Output written on main.pdf (6 pages, 183514 bytes).
 PDF statistics:
  210 PDF objects out of 1000 (max. 8388607)
  38 named destinations out of 1000 (max. 500000)
