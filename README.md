@@ -8,6 +8,13 @@
 
 # Directorios
 
+# Project tree
+
+ * [Archivos](./Archivos)
+   * [.RData](./Archivos/.RData)
+   * [.Rhistory](./Archivos/.Rhistory)
+   * [codigo.R](./Archivos/codigo.R)
+
 ```
 .
 ├── Archivos
